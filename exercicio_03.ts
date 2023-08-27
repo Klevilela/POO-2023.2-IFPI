@@ -37,11 +37,11 @@ function soma(x:number, y?:any):number{
 
 //questão 6
 function exibir(...valores:any[]){
-
-    for (const item of valores) {
-        console.log(item)    
-    }
-
+    return `${valores}`
+    //let valor
+    /*for (const item of valores) {
+        console.log(item)   
+    }*/
 }
 
 //questão 7
