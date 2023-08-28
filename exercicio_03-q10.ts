@@ -1,11 +1,101 @@
- type Leitura = {
+// Objeto Leitura: Tem como atributos, os valores da medição de cada fator climático 
+type Leitura = {
    temperatura: number
    umidade: number
    nivel_poluicao: number
    nivel_ruido: number
 }
 
-type Relatorio_leituras_temperatura = {
+// Objeto Relatorio_leituras: Mostra os valores médio, maior e menor de todas as medições feitas de cada fator climático
+type Relatorio_leituras = {
+    media:number
+    maior:number
+    menor:number
+}
+
+// Função que chama outras funções para calcular os dados passados e gerar o relatório
+function processar_medicoes(){
+    
+    const medicoes_temperatura:Array<number> = obter_medicoes(lista_leituras, 'temperatura')
+    const medicoes_umidade:Array<number> = obter_medicoes(lista_leituras, 'umidade')
+    const medicoes_ruido:Array<number> = obter_medicoes(lista_leituras, 'nivel_ruido')
+    const medicoes_poluicao:Array<number> = obter_medicoes(lista_leituras, 'nivel_poluicao')
+
+    const media_temperatura = calcular_media(medicoes_temperatura)
+    const  maior_temperatura = Math.max(...medicoes_temperatura)
+    const menor_temperatura = Math.min(...medicoes_temperatura)
+    
+    const umidade_media = calcular_media(medicoes_umidade)
+    const maior_umidade = Math.max(...medicoes_umidade)
+    const menor_umidade = Math.min(...medicoes_umidade)
+    
+    const ruido_medio = calcular_media(medicoes_ruido)
+    const maior_ruido = Math.max(...medicoes_ruido)
+    const menor_ruido = Math.min(...medicoes_ruido)
+    
+    const poluicao_media = calcular_media(medicoes_poluicao)
+    const maior_poluicao = Math.max(...medicoes_poluicao)
+    const menor_poluicao = Math.min(...medicoes_poluicao)
+
+    console.log(gerar_relatorio(media_temperatura, maior_temperatura, menor_temperatura, 'Temperatura'))
+    console.log(gerar_relatorio(umidade_media, maior_umidade, menor_umidade, 'Umidade'))
+    console.log(gerar_relatorio(ruido_medio, maior_ruido, menor_ruido, 'Ruido'))
+    console.log(gerar_relatorio(poluicao_media, maior_poluicao, menor_poluicao, 'Poluição'))
+
+}
+
+const calcular_media = (valores:Array<number>) => valores.reduce((atual:number, total:number) => atual + total) / valores.length  
+
+// Função para por numa nova lista, os valores de um atributo específco do objeto Leitura
+function obter_medicoes(medicoes:Array<Leitura>, tipo:string){
+    let lista = []
+
+    for (let index = 0; index < medicoes.length; index++) {
+        lista.push(medicoes[index][tipo])
+    }
+    
+    return lista
+}
+
+function gerar_relatorio(media:number, maior:number, menor:number, tipo:string){
+    const relatorio:Relatorio_leituras ={
+        media:media,
+        maior:maior,
+        menor:menor
+    }
+
+    return `
+    Relatório ${tipo}\n
+    ${tipo} média: ${relatorio.media}
+    Maior ${tipo}: ${relatorio.maior}
+    Menor ${tipo}: ${relatorio.menor}
+    `
+}
+
+const leitura1:Leitura = {
+    temperatura:28,
+    umidade:60,
+    nivel_poluicao:5,
+    nivel_ruido:3
+}
+
+const leitura2:Leitura = {
+    temperatura:30,
+    umidade:45,
+    nivel_poluicao:45,
+    nivel_ruido:7
+}
+
+const leitura3:Leitura = {
+    temperatura:33,
+    umidade:42,
+    nivel_poluicao:75,
+    nivel_ruido:20
+}
+
+let lista_leituras:Array<Leitura> = [leitura1, leitura2, leitura3]
+console.log(processar_medicoes())
+/*type Relatorio_leituras_temperatura = {
     temperatura_media:number
     maior_temperatura:number
     menor_temperatura:number
@@ -27,7 +117,7 @@ type Relatorio_leituras_ruido = {
     media_ruido:number
     maior_ruido:number
     menor_ruido:number
-}
+}*/
 
 
 
@@ -39,41 +129,17 @@ for (let index = 0; index < lista_leituras.length; index++) {
 }
 */
 
-function processar_medicoes(){
-    const medicoes_temperatura:Array<number> = obter_medicoes_temperatura(lista_leituras)
-    const medicoes_umidade:Array<number> = obter_medicoes_umidade(lista_leituras)
-    const medicoes_ruido:Array<number> = obter_medicoes_ruido(lista_leituras)
-    const medicoes_poluicao:Array<number> = obter_medicoes_poluicao(lista_leituras)
-
-    const media_temperatura = calcular_media(medicoes_temperatura)
-    const  maior_temperatura = Math.max(...medicoes_temperatura)
-    const menor_temperatura = Math.min(...medicoes_temperatura)
-    
-    const umidade_media = calcular_media(medicoes_umidade)
-    const  maior_umidade = Math.max(...medicoes_umidade)
-    const menor_umidade = Math.min(...medicoes_temperatura)
-    
-    const ruido_medio = calcular_media(medicoes_ruido)
-    const  maior_ruido = Math.max(...medicoes_ruido)
-    const menor_ruido = Math.min(...medicoes_temperatura)
-    
-    const poluicao_media = calcular_media(medicoes_poluicao)
-    const  maior_poluicao = Math.max(...medicoes_poluicao)
-    const menor_poluicao = Math.min(...medicoes_temperatura)
-
-    console.log(gerar_relatorio_temperatura(media_temperatura, maior_temperatura, menor_temperatura))
-    console.log(gerar_relatorio_umidade(umidade_media, maior_umidade, menor_umidade))
-    console.log(gerar_relatorio_poluicao(poluicao_media, maior_poluicao, menor_poluicao))
-    console.log(gerar_relatorio_ruido(ruido_medio, maior_ruido, menor_ruido))
-
-}
 
 
-const calcular_media = (valores:Array<number>) => valores.reduce((atual:number, total:number) => atual + total) / valores.length  
+
 //const calcular_maior_valor = (...valores:Array<number>) => Math.max(valores)
 //const calcular_menor_valor = (valores:Array<number>) => Math.min(valores)
 
-function obter_medicoes_temperatura(medicoes:Array<Leitura>){
+
+
+
+
+/*function obter_medicoes(medicoes:Array<Leitura>){
     let lista = []
 
     for (let index = 0; index < medicoes.length; index++) {
@@ -112,8 +178,12 @@ function obter_medicoes_poluicao(medicoes:Array<Leitura>){
 
     return lista
 }
+*/
 
-function gerar_relatorio_umidade(media:number, maior:number, menor:number){
+
+
+
+/*function gerar_relatorio_umidade(media:number, maior:number, menor:number){
     const relatorio_umidade:Relatorio_leituras_umidade ={
         umidade_media:media,
         maior_umidade:maior,
@@ -171,30 +241,20 @@ function gerar_relatorio_temperatura(media:number, maior:number, menor:number){
     Maior temperatura: ${relatorio_temperatura.maior_temperatura}
     Menor temperatura: ${relatorio_temperatura.menor_temperatura}
     `
-}
+}*/
 
-const leitura1:Leitura = {
-    temperatura:28,
-    umidade:60,
-    nivel_poluicao:5,
-    nivel_ruido:3
-}
 
-const leitura2:Leitura = {
-    temperatura:30,
-    umidade:45,
-    nivel_poluicao:45,
-    nivel_ruido:7
-}
-
-const leitura3:Leitura = {
-    temperatura:33,
-    umidade:42,
-    nivel_poluicao:75,
-    nivel_ruido:20
-}
-
-let lista_leituras:Array<Leitura> = [leitura1, leitura2, leitura3]
 
 //processar_medicoes()
-console.log(processar_medicoes())
+
+//console.log(obter_medicoes(lista_leituras, 'temperatura'))
+
+/*const medicoes_temperatura:Array<number> = obter_medicoes_temperatura(lista_leituras)
+    const medicoes_umidade:Array<number> = obter_medicoes_umidade(lista_leituras)
+    const medicoes_ruido:Array<number> = obter_medicoes_ruido(lista_leituras)
+    const medicoes_poluicao:Array<number> = obter_medicoes_poluicao(lista_leituras)*/
+
+/*console.log(gerar_relatorio_temperatura(media_temperatura, maior_temperatura, menor_temperatura))
+    console.log(gerar_relatorio_umidade(umidade_media, maior_umidade, menor_umidade))
+    console.log(gerar_relatorio_poluicao(poluicao_media, maior_poluicao, menor_poluicao))
+    console.log(gerar_relatorio_ruido(ruido_medio, maior_ruido, menor_ruido))*/
