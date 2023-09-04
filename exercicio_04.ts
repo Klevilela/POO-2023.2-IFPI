@@ -64,6 +64,7 @@ console.log(c1.consultarSaldo());
 console.log(c2.consultarSaldo());
 //console.log(c3.consultarSaldo());*/
 
+//questão 6
 class Saudacao{
   texto:string
   destinatario:string
@@ -81,6 +82,7 @@ class Saudacao{
 let sau_1 = new Saudacao('Olá', 'João')
 console.log(sau_1.obterSaudacao())
 
+//questão 7
 class Triangulo{
   l1:number
   l2:number
