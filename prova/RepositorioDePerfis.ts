@@ -7,26 +7,36 @@ export class RepositorioDePerfis{
         this.perfis.push(perfil)
     }
 
-    consultar(id:number, nome:string, email: string){
-        let achou: boolean = false;
+    consultar(id?:number, nome?:string, email?:string):Perfil{
+        //let achou: boolean = false;
 
         let perfilProcurado!: Perfil;
 
         for  (let perfil of this.perfis) {
-            if (perfil['_id'] == id){
-                perfilProcurado = perfil
-                break
-            }
-            else if (perfil['_nome'] == nome){
-                perfilProcurado = perfil
-                break
-            }
-            else if (perfil['_email'] == email){
-                perfilProcurado = perfil
-                break
+            
+            //let [id, nome, email] = params;
+            /*if (
+                (!id || perfil.id === id) &&
+                (!nome || perfil.nome === nome) &&
+                (!email || perfil.email === email)
+              ) {
+                perfilProcurado =  perfil;
+              }*/
+                
+                if (perfil["_id"] == id) {
+                  perfilProcurado = perfil;
+                  break
+                } else if (perfil["_nome"] == nome){
+                  perfilProcurado = perfil;
+                  break
+                } else if (perfil["_email"] == email)
+                {
+                  perfilProcurado = perfil;
+                  break
+                }
             }
 
             return perfilProcurado
         }
-    }
+        
 }
