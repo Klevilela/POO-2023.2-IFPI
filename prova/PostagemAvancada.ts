@@ -17,6 +17,10 @@ export class PostagemAvancada extends Postagem {
     this._vizualizacoesRestantes = _vizaulizacoesRestantes;
   }
 
+  get vizualizacoes_restantes(){
+    return this._vizualizacoesRestantes
+  }
+
   adicionarHashtag(hashtag:string):void{
     this._hashtags.push(hashtag)
   }
