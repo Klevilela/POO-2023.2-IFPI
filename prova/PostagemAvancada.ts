@@ -3,7 +3,8 @@ import { Postagem } from "./Postagem";
 
 export class PostagemAvancada extends Postagem {
   private _hashtags: string[] = [];
-  private _vizualizacoesRestantes: number;
+  private _visualizacoesRestantes: number;
+  
   constructor(
     _id: number,
     _texto: string,
@@ -11,10 +12,14 @@ export class PostagemAvancada extends Postagem {
     _descurtidas: number,
     _date: Date,
     _perfil: Perfil,
-    _vizaulizacoesRestantes: number
+    _visualizacoesRestantes: number
   ) {
     super(_id, _texto, _curtidas, _descurtidas, _date, _perfil);
-    this._vizualizacoesRestantes = _vizaulizacoesRestantes;
+
+  }
+
+  get visualizacoesRestantes() {
+    return this._visualizacoesRestantes
   }
 
   get vizualizacoes_restantes(){
@@ -37,7 +42,8 @@ export class PostagemAvancada extends Postagem {
     return achou
   }
 
-  decrementarVizualizacoes():void{
-    this._vizualizacoesRestantes --
+  decrementarVisualizacoes():void{
+    if (this.visualizacoesRestantes > 0) {}
+      this._visualizacoesRestantes--
   }
 }

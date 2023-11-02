@@ -4,11 +4,15 @@ import { PostagemAvancada } from "./PostagemAvancada";
 
 export class RepositorioDePostagens{
     
-    private postagens: Postagem[] = []
+    constructor(private _postagens: Postagem[]){}
+
+    get postagens() {
+        return this._postagens
+    }
     //private postagensAvancadas:PostagemAvancada[] = []
 
         incluir(postagem:Postagem): void{
-            this.postagens.push(postagem)
+            this._postagens.push(postagem)
         }
     
         /*consultar(...params: (number | string | Perfil)[]){
@@ -16,7 +20,7 @@ export class RepositorioDePostagens{
     
             let perfilProcurado!: Postagem;
     
-            for  (let postagem of this.postagens) {
+            for  (let postagem of this._postagens) {
                 if (postagem instanceof PostagemAvancada){
                     let [id, texto, hashtag, perfil] = params;
                     
