@@ -4,15 +4,30 @@ import { PostagemAvancada } from "./PostagemAvancada";
 
 export class RepositorioDePostagens{
     
-    constructor(private _postagens: Postagem[]){}
+    private _postagens: Postagem[] = []
 
     get postagens() {
-        return this._postagens
+      return this._postagens
     }
     //private postagensAvancadas:PostagemAvancada[] = []
 
         incluir(postagem:Postagem): void{
+          this._postagens.push(postagem)
+          //if (!this.consultar(postagem.id, postagem.texto)){
+          //}
+          
+        }
+
+        incluirv2(postagem:Postagem):void{
+          if (!this.consultar(postagem.id, postagem.texto) == null){
             this._postagens.push(postagem)
+          }
+          //let postagem_consultada = this.consultar(postagem.id, postagem.texto)
+          /* for (let post of this.postagens) {
+            if (!this.consultar(postagem.id, postagem.texto)){
+              this.postagens.push(postagem)
+            }
+          } */
         }
     
         /*consultar(...params: (number | string | Perfil)[]){
@@ -53,11 +68,52 @@ export class RepositorioDePostagens{
             }
 
         }*/
-        consultar(id?: number, texto?: string, hashtag?: string, perfil?: Perfil): Postagem[] {
+        consultar(id?: number, texto?: string, hashtag?: string, perfil?: Perfil){
           let postagensEncontradas: Postagem[] = [];
-        
-          for (let postagem of this.postagens) {
+          
+          for (let index = 0; index < this.postagens.length; index++) {
+            if (this.postagens[index]['_id'] == id){
+              postagensEncontradas.push(this.postagens[index]);
+              break
+            }
+            else if (this.postagens[index]['_texto'] == texto){
+              postagensEncontradas.push(this.postagens[index]);
+              break
+            }
+            else if (this.postagens[index]['_perfil'] == perfil){
+              postagensEncontradas.push(this.postagens[index]);
+              break
+            }  
+          }
+          console.log(postagensEncontradas)
+          return postagensEncontradas
+          /*if (this._postagens[index] instanceof PostagemAvancada) {
+            
+            if (this.postagens[index]['_hashtags'].includes(hashtag)){
+              postagensEncontradas.push(this.postagens[index]);
+            }
+          }
+
+          /*for (let postagem of this.postagens) {
+            if (postagem['_id'] == id){
+              postagensEncontradas.push(postagem);
+              break
+            }
+            else if (postagem['_texto'] == texto){
+              postagensEncontradas.push(postagem);
+              break
+            }
+            else if (postagem['_perfil'] === perfil){
+              postagensEncontradas.push(postagem);
+              break
+            }
+            
+
             if (postagem instanceof PostagemAvancada) {
+              
+              if (!hashtag || postagem['_hashtags'].includes(hashtag)){
+                postagensEncontradas.push(postagem);
+              }*/
               /*if (!id || postagem['_id'] == id){
                 postagensEncontradas.push(postagem);
                 break
@@ -76,7 +132,7 @@ export class RepositorioDePostagens{
               }*/
 
               //outra versão
-              if (postagem['_id'] == id){
+              /*if (postagem['_id'] == id){
                 postagensEncontradas.push(postagem);
                 break
               }
@@ -99,10 +155,10 @@ export class RepositorioDePostagens{
                 (!perfil || postagem['_perfil'] === perfil)
               ) {
                 postagensEncontradas.push(postagem);
-              }*/
+              }
             }
           }
+          return postagensEncontradas;*/
         
-          return postagensEncontradas;
         }
 }

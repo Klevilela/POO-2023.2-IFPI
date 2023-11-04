@@ -15,16 +15,23 @@ export class PostagemAvancada extends Postagem {
     _visualizacoesRestantes: number
   ) {
     super(_id, _texto, _curtidas, _descurtidas, _date, _perfil);
-
+    this._visualizacoesRestantes = _visualizacoesRestantes;
+    //this._hashtags = this._hashtags
   }
+
+  
+  public get hashtags() {
+    return this._hashtags
+  }
+  
 
   get visualizacoesRestantes() {
     return this._visualizacoesRestantes
   }
 
-  get vizualizacoes_restantes(){
+  /*get vizualizacoes_restantes(){
     return this._vizualizacoesRestantes
-  }
+  }*/
 
   adicionarHashtag(hashtag:string):void{
     this._hashtags.push(hashtag)
