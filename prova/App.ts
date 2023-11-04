@@ -5,7 +5,7 @@ import { PostagemAvancada } from "./PostagemAvancada";
 import { RepositorioDePerfis } from "./RepositorioDePerfis";
 import { RepositorioDePostagens } from "./RepositorioDePostagens";
 import * as fs from 'fs' 
-import { encode } from "punycode";
+
 
 const prompt = require('prompt-sync');
 const input = prompt()
@@ -48,6 +48,40 @@ export class App {
 
         return perfis
     }
+
+    carregarPostagensdeArquivo(){
+        const arquivo = fs.readFileSync('Postagens.txt', 'utf-8')
+        const linhas = arquivo.split('\n')
+        let postagens_carregadas:string = `POSTAGENS CARREGADAS\n`
+        
+        for (let linha of linhas) {
+            let id = linha.split(';')[0]
+            let texto = linha.split(';')[1]
+            let curtidas = linha.split(';')[2]
+            let descurtidas = linha.split(';')[3]
+            let data = linha.split(';')[4]
+            
+
+            postagens_carregadas += `\nId: ${id}\nTexto: ${texto}\nCurtidas: ${curtidas}\nDescurtidas: ${descurtidas}\nData de publicação: ${data}\n\n`
+        }
+
+        return postagens_carregadas
+    }
+
+    gravarPerfis(){
+        console.log('CADASTRANDO PERFIS')
+        let linha_perfil:string = ``
+        let linhas_perfis:string = ``
+        let perfis_cadastrados = this.redeSocial.repDePerfis.repDePerfis
+        
+        for (let perfil of perfis_cadastrados){
+            linha_perfil += `${perfil.id};${perfil.nome};${perfil.email}`
+            linhas_perfis += linha_perfil
+            
+        }
+        //linhas_perfis = linhas_perfis.slice(0, linhas_perfis.length)
+        fs.writeFileSync('Perfis.txt', linhas_perfis, {flag: 'a'})
+    }
     
     exibirMenu(): void{
         let menu = ``
@@ -69,9 +103,10 @@ export class App {
     usarOpcoes():void{
         
         let opcao:string
-        
+        //app.gravarPerfis()
         do {
             let enter_to_continue:string = input('Aperter <enter> para continuar')
+            //console.log(this.carregarPerfildeArquivo())
             this.exibirMenu()
             opcao = input('\nOPÇÃO: ')
             
@@ -106,9 +141,11 @@ export class App {
             }
             //enter_to_continue = input('\n   Aperte <enter> para continuar')
             //opcao = input('\nOPÇÃO: ')
-        }   while (opcao != SAIR);
+        }while (opcao != SAIR);
+        app.gravarPerfis()
         console.log('APLICACAO ENCERRADA')
-        }
+        //app.gravarPerfis()
+    }
 }
 
 //const nome = input('Nome: ')
@@ -279,6 +316,9 @@ let rede_social:RedeSocial = new RedeSocial()
 const app = new App(rede_social)
 //app.usarOpcoes()
 console.log(app.carregarPerfildeArquivo())
+
+//app.gravarPerfis()
+console.log(app.carregarPostagensdeArquivo())
 
 
 //console.log(rede_social.repDePerfis)
